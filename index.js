@@ -56,10 +56,11 @@ const loadSampleInput = function () {
 02:30 - Section 1
 05:35 - Section 2
 07:53 - Section 3
+##HEADING CHANGE
 10:25 - Section 4
 (15:24) Section 5
 (20:22) - Section 6
-(45:51): Section 7`;
+Section 7`;
 
   timeAdjustEl.value = '2:08';
 };
@@ -95,21 +96,33 @@ const secondsToTime = (sec) => {
 const reduceTime = function (text, timeToSubtract) {
   const timestamps = text
     .split('\n')
-    .map((line) => line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/)[0]);
+    .map((line) => (line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/) || [])[0]);
 
-  const updatedTimestamps = timestamps.map((time) =>
-    secondsToTime(timeToSeconds(time) - timeToSubtract)
-  );
+  return timestamps.reduce((arr, time) => {
+    if (time) {
+      const TTS = timeToSeconds(time);
+      const STT =
+        TTS < timeToSubtract ? 'XX:XX' : secondsToTime(TTS - timeToSubtract);
+      arr.push({ old: time, new: STT });
+    } else arr.push(null);
+    return arr;
+  }, []);
+};
 
-  for (let i = 0; i < timestamps.length; ++i)
-    console.log(timestamps[i], updatedTimestamps[i]);
+const modifyText = function (text, timestamps) {
+  return text.split('\n').map((line, i) => {
+    if (timestamps[i])
+      return line.replace(timestamps[i].old, timestamps[i].new);
+    else return line;
+  });
 };
 
 buttonEl.addEventListener('click', function (e) {
   e.preventDefault();
   const inputText = inputTextEl.value;
   const timeToSubtract = timeToSeconds(timeAdjustEl.value);
-  reduceTime(inputText, timeToSubtract);
+  const newTimestamps = reduceTime(inputText, timeToSubtract);
+  const newText = modifyText(inputText, newTimestamps);
 });
 
 loadSampleInput();
