@@ -49,6 +49,7 @@ RegEx
 
 const inputTextEl = document.getElementById('input-text');
 const timeAdjustEl = document.getElementById('time-to-adjust');
+const outputTextEl = document.getElementById('output-text');
 const buttonEl = document.getElementById('btn-adjust');
 
 const loadSampleInput = function () {
@@ -110,11 +111,14 @@ const reduceTime = function (text, timeToSubtract) {
 };
 
 const modifyText = function (text, timestamps) {
-  return text.split('\n').map((line, i) => {
-    if (timestamps[i])
-      return line.replace(timestamps[i].old, timestamps[i].new);
-    else return line;
-  });
+  return text
+    .split('\n')
+    .map((line, i) => {
+      if (timestamps[i])
+        return line.replace(timestamps[i].old, timestamps[i].new);
+      else return line;
+    })
+    .join('\n');
 };
 
 buttonEl.addEventListener('click', function (e) {
@@ -123,6 +127,7 @@ buttonEl.addEventListener('click', function (e) {
   const timeToSubtract = timeToSeconds(timeAdjustEl.value);
   const newTimestamps = reduceTime(inputText, timeToSubtract);
   const newText = modifyText(inputText, newTimestamps);
+  outputTextEl.value = newText;
 });
 
 loadSampleInput();
