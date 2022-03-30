@@ -67,8 +67,9 @@ Section 7`;
 };
 
 const timeToSeconds = (time) => {
+  //convert the HH:MM:SS time string to seconds
   const [HH, MM, SS] = time
-    .split(':')
+    .split(':') // extract HH, MM and SS from the time string
     .reverse()
     .reduce(
       (acc, cur, i) => {
@@ -90,7 +91,7 @@ const secondsToTime = (sec) => {
   );
 
   return hours === '00'
-    ? minutes + ':' + seconds //Return MM:SS if HH is 0
+    ? minutes + ':' + seconds //Return MM:SS if HH is 00
     : hours + ':' + minutes + ':' + seconds; // Return in HH:MM:SS
 };
 
