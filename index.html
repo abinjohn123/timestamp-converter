@@ -4,43 +4,44 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/style.css" />
     <title>Timestamps Converter</title>
   </head>
   <body>
     <div class="container">
-      <form>
-        <div class="box">
-          <h2 class="section-title">Original Timestamps</h2>
-          <div class="helper-text">
-            Enter your original timestamp content in the textbox below. Make
-            sure the timestamps follow the
-            <span class="highlight">HH:MM:SS</span> format
-          </div>
-          <textarea
-            class="input-text"
-            name="input-text"
-            id="input-text"
-            cols="30"
-            rows="10"
-          ></textarea>
+      <div class="text-box --input pad-med">
+        <h2 class="section-title">Original Timestamps</h2>
+        <div class="helper-text">
+          Enter your original timestamp content in the textbox below.<br />Make
+          sure the timestamps follow the
+          <span class="highlight">HH:MM:SS</span> format
         </div>
-        <div class="box">
-          <h2 class="section-title">Time to adjust</h2>
-          <div class="helper-text">
-            Enter how much time needs to be adjusted in
-            <span class="highlight">HH:MM:SS</span> format
-          </div>
-          <input class="input-text" id="time-to-adjust" type="text" />
-        </div>
-        <button type="submit" id="btn-adjust">Adjust</button>
-      </form>
-
-      <div class="box">
-        <h2 class="section-title">Adjusted Timestamps:</h2>
         <textarea
-          class="input-text"
+          class="textarea bdr-rad-s pad-med"
           name="input-text"
+          id="input-text"
+          cols="30"
+          rows="10"
+        ></textarea>
+      </div>
+      <div class="controls-box pad-med bdr-rad-s">
+        <h2 class="controls-title">Controls</h2>
+        <div class="helper-text">
+          Enter how much time needs to be adjusted in
+          <span class="highlight">HH:MM:SS</span> format
+        </div>
+        <input class="input-text" id="time-to-adjust" type="text" />
+        <button class="btn" id="btn-adjust">Adjust</button>
+      </div>
+      <div class="text-box --output pad-med">
+        <h2 class="section-title">Adjusted Timestamps</h2>
+        <div class="helper-text">
+          Here is the document with the corrected timestamps.<br />Click on the
+          icon to copy the content to your clipboard.
+        </div>
+        <textarea
+          class="textarea bdr-rad-s pad-med"
+          name="output-text"
           id="output-text"
           cols="30"
           rows="10"

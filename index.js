@@ -45,6 +45,16 @@ RegEx
 //   '01:17:25',
 // ];
 
+
+
+
+TODO
+1. Add validation for input time (2:80 should not be valid))
+1.a. Develop test cases for validating input
+
+2. Add toggle to add / delete time from original timestamps
+
+3. Stylize scrollbar for textareas
 */
 
 const inputTextEl = document.getElementById('input-text');
