@@ -23,38 +23,16 @@ RegEx
 
 
 
-// const times = [
-//   '03:30',
-//   '09:34',
-//   '14:53',
-//   '17:32',
-//   '20:55',
-//   '24:07',
-//   '27:48',
-//   '29:10',
-//   '33:36',
-//   '38:57',
-//   '42:44',
-//   '46:44',
-//   '50:23',
-//   '01:00:57',
-//   '01:02:01',
-//   '01:05:16',
-//   '01:11:18',
-//   '01:13:27',
-//   '01:17:25',
-// ];
-
-
-
-
 TODO
-1. Add validation for input time (2:80 should not be valid))
+1. Add validation for input time in both document and control box (2:80 should not be valid))
 1.a. Develop test cases for validating input
+1.b. Time adjustment should only run if control box input time is valid.
 
 2. Add toggle to add / delete time from original timestamps
 
 3. Stylize scrollbar for textareas
+
+4. Add feature to highlight adjusted timestamps marked in XX:XX
 */
 
 const inputTextEl = document.getElementById('input-text');
@@ -74,6 +52,7 @@ const loadSampleInput = function () {
 Section 7`;
 
   timeAdjustEl.value = '2:08';
+  // timeAdjustEl.value = '99:99:99';
 };
 
 const timeToSeconds = (time) => {

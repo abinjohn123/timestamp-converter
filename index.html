@@ -14,7 +14,7 @@
         <div class="helper-text">
           Enter your original timestamp content in the textbox below.<br />Make
           sure the timestamps follow the
-          <span class="highlight">HH:MM:SS</span> format
+          <span class="highlight">HH:MM:SS</span> format.
         </div>
         <textarea
           class="textarea bdr-rad-s pad-med"
@@ -26,11 +26,15 @@
       </div>
       <div class="controls-box pad-med bdr-rad-s">
         <h2 class="controls-title">Controls</h2>
-        <div class="helper-text">
-          Enter how much time needs to be adjusted in
-          <span class="highlight">HH:MM:SS</span> format
-        </div>
-        <input class="input-text" id="time-to-adjust" type="text" />
+        <!-- <div class="helper-text">
+          Enter how much time needs to be adjusted in HH:MM:SS format
+        </div> -->
+        <input
+          class="input-time"
+          id="time-to-adjust"
+          type="text"
+          maxlength="8"
+        />
         <button class="btn" id="btn-adjust">Adjust</button>
       </div>
       <div class="text-box --output pad-med">

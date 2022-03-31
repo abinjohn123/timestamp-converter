@@ -1,4 +1,10 @@
 :root {
-  --bg: #171717;
-  --text: #bae6fd;
+  --bg: #581c87;
+  --text: #191115;
+
+  --highlight: #fcd4ea;
+
+  --options: #f5d0fe;
+  --opt-shade: #c4a6cb;
+  --btn: #581c87;
 }
