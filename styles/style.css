@@ -88,6 +88,33 @@ body {
   gap: 2rem;
 }
 
+.control {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.adjustment-types {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.adj-icon {
+  height: 3rem;
+  cursor: pointer;
+}
+
+.--deselect {
+  stroke: var(--opt-shade-2);
+  fill: var(--options);
+}
+
+.--select {
+  stroke: var();
+  fill: var(--btn);
+}
+
 .input-time {
   font-size: 2rem;
   width: 9rem;

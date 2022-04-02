@@ -29,12 +29,43 @@
         <!-- <div class="helper-text">
           Enter how much time needs to be adjusted in HH:MM:SS format
         </div> -->
-        <input
-          class="input-time"
-          id="time-to-adjust"
-          type="text"
-          maxlength="8"
-        />
+        <div class="control">
+          <div class="adjustment-types">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="adj-icon"
+              id="adj-icon--0"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="adj-icon"
+              id="adj-icon--1"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+
+          <input
+            class="input-time"
+            id="time-to-adjust"
+            type="text"
+            maxlength="8"
+          />
+        </div>
         <button class="btn" id="btn-adjust">Adjust</button>
       </div>
       <div class="text-box --output pad-med">

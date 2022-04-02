@@ -25,8 +25,9 @@ RegEx
 
 TODO
 1. Add validation for input time in both document and control box (2:80 should not be valid))
-1.a. Develop test cases for validating input
-1.b. Time adjustment should only run if control box input time is valid.
+1.a. Develop test cases for validating input -- DONE
+1.b. Time adjustment should only run if control box input time is valid -- DONE
+1.c. Instead of alert box, make the alert display under the adjustment time box and add visual cues
 
 2. Add toggle to add / delete time from original timestamps
 
@@ -39,11 +40,13 @@ const inputTextEl = document.getElementById('input-text');
 const timeAdjustEl = document.getElementById('time-to-adjust');
 const outputTextEl = document.getElementById('output-text');
 const buttonEl = document.getElementById('btn-adjust');
+const adjEls = document.querySelectorAll('.adj-icon');
+let adjType = 'subtract';
 
 const loadSampleInput = function () {
   inputTextEl.value = `01:10 - Section 0
 02:30 - Section 1
-05:35 - Section 2
+115:35 - Section 2
 07:53 - Section 3
 ##HEADING CHANGE
 10:25 - Section 4
@@ -67,6 +70,8 @@ const timeToSeconds = (time) => {
       },
       [0, 0, 0]
     );
+  if (HH > 23 || MM > 59 || SS > 59) return 0; //Return 0 if timestamp is invalid
+
   return HH * 3600 + MM * 60 + SS;
 };
 
@@ -84,17 +89,20 @@ const secondsToTime = (sec) => {
     : hours + ':' + minutes + ':' + seconds; // Return in HH:MM:SS
 };
 
-const reduceTime = function (text, timeToSubtract) {
+const adjustTime = function (text, timeToAdjust, adjType = 'subtract') {
   const timestamps = text
     .split('\n')
-    .map((line) => (line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/) || [])[0]);
+    .map((line) => (line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/) || [null])[0]); //Extract the timestamps present from each line with regex
 
   return timestamps.reduce((arr, time) => {
     if (time) {
       const TTS = timeToSeconds(time);
-      const STT =
-        TTS < timeToSubtract ? 'XX:XX' : secondsToTime(TTS - timeToSubtract);
-      arr.push({ old: time, new: STT });
+      let STT;
+      if (adjType === 'add') STT = secondsToTime(TTS + timeToAdjust);
+      else
+        STT = TTS < timeToAdjust ? 'XX:XX' : secondsToTime(TTS - timeToAdjust);
+
+      arr.push({ old: time, new: STT }); //push an object that containts old and new timestamps
     } else arr.push(null);
     return arr;
   }, []);
@@ -106,7 +114,8 @@ const modifyText = function (text, timestamps) {
     .map((line, i) => {
       if (timestamps[i])
         return line.replace(timestamps[i].old, timestamps[i].new);
-      else return line;
+      //Replace old timestamps with new timestamp and return the line
+      else return line; //Return the line as is if no timestamps are present in it
     })
     .join('\n');
 };
@@ -114,10 +123,41 @@ const modifyText = function (text, timestamps) {
 buttonEl.addEventListener('click', function (e) {
   e.preventDefault();
   const inputText = inputTextEl.value;
-  const timeToSubtract = timeToSeconds(timeAdjustEl.value);
-  const newTimestamps = reduceTime(inputText, timeToSubtract);
-  const newText = modifyText(inputText, newTimestamps);
-  outputTextEl.value = newText;
+  const timeToAdjust = timeToSeconds(timeAdjustEl.value);
+
+  if (timeToAdjust) {
+    const newTimestamps = adjustTime(inputText, timeToAdjust, adjType);
+    const newText = modifyText(inputText, newTimestamps);
+    outputTextEl.value =
+      `/* ${timeAdjustEl.value} has been ${adjType}ed */\n\n` + newText;
+  } else {
+    alert('Please check if the adjusment time is correct');
+    timeAdjustEl.value = '';
+  }
+});
+
+// ########################################
+//         CONTROL BOX CODE
+// ########################################
+
+function deselectButtons() {
+  adjEls.forEach((adjBtn) => {
+    adjBtn.classList.remove('--select');
+    adjBtn.classList.add('--deselect');
+  });
+}
+
+adjEls.forEach((adjBtn, i, arr) => {
+  adjBtn.addEventListener('click', function (e) {
+    deselectButtons();
+
+    if (adjBtn.id === 'adj-icon--0') adjType = 'add';
+    else adjType = 'subtract';
+
+    adjBtn.classList.remove('--deselect');
+    adjBtn.classList.add('--select');
+  });
 });
 
 loadSampleInput();
+deselectButtons();
