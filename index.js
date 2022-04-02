@@ -150,6 +150,7 @@ buttonEl.addEventListener('click', function (e) {
   } else {
     alert('Please check if the adjusment time is correct');
     timeAdjustEl.value = '';
+    outputTextEl.value = '';
   }
 });
 
