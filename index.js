@@ -29,7 +29,7 @@ TODO
 1.b. Time adjustment should only run if control box input time is valid -- DONE
 1.c. Instead of alert box, make the alert display under the adjustment time box and add visual cues
 
-2. Add toggle to add / delete time from original timestamps
+2. Add toggle to add / delete time from original timestamps -- Done
 
 3. Stylize scrollbar for textareas
 
@@ -60,6 +60,9 @@ Section 7`;
 
 const timeToSeconds = (time) => {
   //convert the HH:MM:SS time string to seconds
+
+  if (!time) return null;
+
   const [HH, MM, SS] = time
     .split(':') // extract HH, MM and SS from the time string
     .reverse()
@@ -70,7 +73,7 @@ const timeToSeconds = (time) => {
       },
       [0, 0, 0]
     );
-  if (HH > 23 || MM > 59 || SS > 59) return 0; //Return 0 if timestamp is invalid
+  if (HH > 23 || MM > 59 || SS > 59) return null; //Return 0 if timestamp is invalid
 
   return HH * 3600 + MM * 60 + SS;
 };
@@ -92,17 +95,31 @@ const secondsToTime = (sec) => {
 const adjustTime = function (text, timeToAdjust, adjType = 'subtract') {
   const timestamps = text
     .split('\n')
-    .map((line) => (line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/) || [null])[0]); //Extract the timestamps present from each line with regex
+    .map((line) => (line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/) || [null])[0]); //Extract the timestamps present from each line with regex. Return null if no timestamp is present in a given line
 
   return timestamps.reduce((arr, time) => {
     if (time) {
-      const TTS = timeToSeconds(time);
-      let STT;
-      if (adjType === 'add') STT = secondsToTime(TTS + timeToAdjust);
-      else
-        STT = TTS < timeToAdjust ? 'XX:XX' : secondsToTime(TTS - timeToAdjust);
+      //Run time conversion only if a line has a timestamp
+      const origTimeInSeconds = timeToSeconds(time);
 
-      arr.push({ old: time, new: STT }); //push an object that containts old and new timestamps
+      if (!origTimeInSeconds)
+        arr.push({
+          old: time,
+          new: 'XX:XX',
+        });
+      //If timestamp in input document is invalid, timestamp in output will be XX:XX
+      else {
+        let adjustedTime;
+        if (adjType === 'add')
+          adjustedTime = secondsToTime(origTimeInSeconds + timeToAdjust);
+        else
+          adjustedTime =
+            origTimeInSeconds < timeToAdjust
+              ? 'XX:XX'
+              : secondsToTime(origTimeInSeconds - timeToAdjust);
+
+        arr.push({ old: time, new: adjustedTime }); //push an object that containts old and new timestamps
+      }
     } else arr.push(null);
     return arr;
   }, []);
