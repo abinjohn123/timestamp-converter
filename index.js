@@ -137,6 +137,13 @@ const modifyText = function (text, timestamps) {
     .join('\n');
 };
 
+const copyToClipboard = function () {
+  const copyText = document.getElementById('output-text').value;
+  navigator.clipboard.writeText(copyText).then(() => {
+    alert('Copied to clipboard');
+  });
+};
+
 buttonEl.addEventListener('click', function (e) {
   e.preventDefault();
   const inputText = inputTextEl.value;

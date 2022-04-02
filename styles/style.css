@@ -52,6 +52,10 @@ body {
   color: var(--highlight);
 }
 
+.relative {
+  position: relative;
+}
+
 /* Textbox styling */
 .text-box {
   display: grid;
@@ -68,6 +72,8 @@ body {
 }
 .textarea {
   resize: none;
+  height: 100%;
+  width: 100%;
   font-size: 1.4rem;
   font-weight: normal;
   opacity: 1;
@@ -75,6 +81,25 @@ body {
 
 .textarea:focus {
   outline: none;
+}
+
+.copy-icon-container {
+  display: inline;
+  position: absolute;
+  transform: translate(-110%, 10%);
+}
+
+.copy-icon {
+  height: 3rem;
+  cursor: pointer;
+  transition: transform 0.1s color 0.1s;
+
+  color: var(--opt-shade-2);
+}
+
+.copy-icon:hover {
+  transform: scale(1.05);
+  color: var(--btn);
 }
 
 /* Control box styling */
