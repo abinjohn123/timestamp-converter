@@ -140,9 +140,10 @@ const modifyText = function (text, timestamps) {
 
 const copyToClipboard = function (copyText) {
   console.log(copyText);
-  navigator.clipboard.writeText(copyText).then(() => {
-    alert('Copied to clipboard');
-  });
+  if (copyText)
+    navigator.clipboard.writeText(copyText).then(() => {
+      alert('Copied to clipboard');
+    });
 };
 
 // ########################################
