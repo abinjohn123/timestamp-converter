@@ -81,6 +81,7 @@ body {
   font-size: 1.4rem;
   font-weight: normal;
   opacity: 1;
+  line-height: 1.5;
 }
 
 .textarea:focus {
@@ -96,7 +97,7 @@ body {
 .copy-icon {
   height: 3rem;
   cursor: pointer;
-  transition: transform 0.1s color 0.1s;
+  transition: transform 0.1s, color 0.1s;
 
   color: var(--opt-shade-2);
 }
@@ -178,9 +179,13 @@ body {
   border-radius: 4px;
   outline: none;
   border: none;
-  transition: transform 0.2s;
+  transition: transform 0.1s, background-color 0.3s;
 }
 
 .btn:hover {
-  transform: translate(0, 2px);
+  background-color: var(--btn-tint);
+}
+
+.btn:active {
+  transform: scale(0.99);
 }
