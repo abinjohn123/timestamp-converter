@@ -193,7 +193,8 @@ buttonEl.addEventListener('click', function (e) {
     const newTimestamps = adjustTime(inputText, timeToAdjust, adjType);
     const newText = modifyText(inputText, newTimestamps);
     outputTextEl.value =
-      `/* ${timeAdjustEl.value} has been ${adjType}ed */\n\n` + newText;
+      `/* ${secondsToTime(timeToAdjust)} has been ${adjType}ed */\n\n` +
+      newText;
   } else {
     alert('Please check if the adjusment time is correct');
     timeAdjustEl.value = '';
