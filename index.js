@@ -41,6 +41,7 @@ const timeAdjustEl = document.getElementById('time-to-adjust');
 const outputTextEl = document.getElementById('output-text');
 const buttonEl = document.getElementById('btn-adjust');
 const adjEls = document.querySelectorAll('.adj-icon');
+const copyToClipEl = document.getElementById('copy-icon');
 let adjType = 'subtract';
 
 const loadSampleInput = function () {
@@ -137,29 +138,12 @@ const modifyText = function (text, timestamps) {
     .join('\n');
 };
 
-const copyToClipboard = function () {
-  const copyText = document.getElementById('output-text').value;
+const copyToClipboard = function (copyText) {
+  console.log(copyText);
   navigator.clipboard.writeText(copyText).then(() => {
     alert('Copied to clipboard');
   });
 };
-
-buttonEl.addEventListener('click', function (e) {
-  e.preventDefault();
-  const inputText = inputTextEl.value;
-  const timeToAdjust = timeToSeconds(timeAdjustEl.value);
-
-  if (timeToAdjust) {
-    const newTimestamps = adjustTime(inputText, timeToAdjust, adjType);
-    const newText = modifyText(inputText, newTimestamps);
-    outputTextEl.value =
-      `/* ${timeAdjustEl.value} has been ${adjType}ed */\n\n` + newText;
-  } else {
-    alert('Please check if the adjusment time is correct');
-    timeAdjustEl.value = '';
-    outputTextEl.value = '';
-  }
-});
 
 // ########################################
 //         CONTROL BOX CODE
@@ -184,5 +168,36 @@ adjEls.forEach((adjBtn, i, arr) => {
   });
 });
 
+// #######################################
+//           EVENT LISTENERS
+// #######################################
+
+copyToClipEl.addEventListener('click', function (e) {
+  e.preventDefault();
+  const copyContent = document.getElementById('output-text').value;
+  const clipboardContent = copyContent
+    .slice(copyContent.indexOf('\n'))
+    .trimStart();
+  copyToClipboard(clipboardContent);
+});
+
+buttonEl.addEventListener('click', function (e) {
+  e.preventDefault();
+  const inputText = inputTextEl.value;
+  const timeToAdjust = timeToSeconds(timeAdjustEl.value);
+
+  if (timeToAdjust) {
+    const newTimestamps = adjustTime(inputText, timeToAdjust, adjType);
+    const newText = modifyText(inputText, newTimestamps);
+    outputTextEl.value =
+      `/* ${timeAdjustEl.value} has been ${adjType}ed */\n\n` + newText;
+  } else {
+    alert('Please check if the adjusment time is correct');
+    timeAdjustEl.value = '';
+    outputTextEl.value = '';
+  }
+});
+
+// ######################################
 loadSampleInput();
 deselectButtons();
