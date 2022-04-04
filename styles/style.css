@@ -11,18 +11,19 @@ html {
 }
 
 body {
-  font-family: sans-serif;
+  font-family: 'Open sans', sans-serif;
   font-size: 1.6rem;
 
   /* background-color: var(--bg); */
   background-image: linear-gradient(
-    to right top,
+    to top left,
     #051937,
     #3e3961,
     #785c8b,
     #b781b1,
     #f9a8d4
   );
+
   color: var(--text);
 
   display: flex;
@@ -60,15 +61,18 @@ body {
 .text-box {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto 6rem 1fr;
 }
 
 .section-title {
-  font-size: 3.2rem;
+  font-size: 3.4rem;
+  letter-spacing: -0.9px;
   margin-bottom: 0.4rem;
+  font-weight: 700;
 }
 .helper-text {
   margin-bottom: 2rem;
+  font-size: 1.6rem;
 }
 .textarea {
   resize: none;

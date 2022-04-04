@@ -34,6 +34,8 @@ TODO
 3. Stylize scrollbar for textareas
 
 4. Add feature to highlight adjusted timestamps marked in XX:XX
+
+5. Display time in the comment text of the output screen in proper HH:MM:SS format
 */
 
 const inputTextEl = document.getElementById('input-text');
