@@ -102,6 +102,11 @@ body {
   color: var(--btn);
 }
 
+.copy-icon:active {
+  /* color: var(--opt-shade-2); */
+  transform: scale(1.01);
+}
+
 /* Control box styling */
 .controls-box {
   background-color: var(--options);
@@ -111,6 +116,8 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
 }
 
 .control {
