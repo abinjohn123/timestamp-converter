@@ -64,14 +64,19 @@
               />
             </svg>
           </div>
-
-          <input
-            class="input-time"
-            id="time-to-adjust"
-            type="text"
-            maxlength="8"
-          />
+          <div class="anchor">
+            <input
+              class="input-time --input-valid"
+              id="time-to-adjust"
+              type="text"
+              maxlength="8"
+            />
+            <p class="invalid-hint hidden" id="invalid-input-time">
+              Invalid Time
+            </p>
+          </div>
         </div>
+
         <button class="btn" id="btn-adjust">Adjust</button>
       </div>
       <div class="text-box --output pad-med">

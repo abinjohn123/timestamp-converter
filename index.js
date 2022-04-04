@@ -44,6 +44,8 @@ const outputTextEl = document.getElementById('output-text');
 const buttonEl = document.getElementById('btn-adjust');
 const adjEls = document.querySelectorAll('.adj-icon');
 const copyToClipEl = document.getElementById('copy-icon');
+const invalidTimeEl = document.getElementById('invalid-input-time');
+
 let adjType = 'subtract';
 
 const loadSampleInput = function () {
@@ -148,6 +150,19 @@ const copyToClipboard = function (copyText) {
     });
 };
 
+const displayError = function (state) {
+  if (state) {
+    timeAdjustEl.classList.remove('--input-valid');
+    timeAdjustEl.classList.add('--input-invalid');
+    invalidTimeEl.classList.remove('hidden');
+    timeAdjustEl.focus();
+  } else {
+    timeAdjustEl.classList.add('--input-valid');
+    timeAdjustEl.classList.remove('--input-invalid');
+    invalidTimeEl.classList.add('hidden');
+  }
+};
+
 // ########################################
 //         CONTROL BOX CODE
 // ########################################
@@ -190,14 +205,15 @@ buttonEl.addEventListener('click', function (e) {
   const timeToAdjust = timeToSeconds(timeAdjustEl.value);
 
   if (timeToAdjust) {
+    displayError(false);
     const newTimestamps = adjustTime(inputText, timeToAdjust, adjType);
     const newText = modifyText(inputText, newTimestamps);
     outputTextEl.value =
       `/* ${secondsToTime(timeToAdjust)} has been ${adjType}ed */\n\n` +
       newText;
   } else {
-    alert('Please check if the adjusment time is correct');
-    timeAdjustEl.value = '';
+    displayError(true);
+    // alert('Please check if the adjusment time is correct');
     outputTextEl.value = '';
   }
 });

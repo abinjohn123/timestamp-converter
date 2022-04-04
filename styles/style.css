@@ -57,6 +57,18 @@ body {
   position: relative;
 }
 
+.--input-invalid {
+  border: 2px solid var(--error);
+}
+
+.--input-valid {
+  border: none;
+}
+
+.hidden {
+  display: none;
+}
+
 /* Textbox styling */
 .text-box {
   display: grid;
@@ -129,6 +141,8 @@ body {
   display: flex;
   align-items: center;
   gap: 2rem;
+
+  margin-bottom: 1rem;
 }
 
 .adjustment-types {
@@ -152,6 +166,10 @@ body {
   fill: var(--btn);
 }
 
+.anchor {
+  position: relative;
+}
+
 .input-time {
   font-size: 2rem;
   width: 9rem;
@@ -162,8 +180,20 @@ body {
   background-color: var(--opt-shade);
 
   outline: none;
-  border: none;
   border-radius: 4px;
+}
+
+.invalid-hint {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--error);
+
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  transform: translate(-9%, 100%);
+  z-index: 1;
 }
 
 .btn {
