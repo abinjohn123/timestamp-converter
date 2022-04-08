@@ -46,9 +46,6 @@ const adjustButtonEl = document.getElementById('btn-adjust');
 const adjEls = document.querySelectorAll('.adj-icon');
 const copyToClipEl = document.getElementById('copy-icon');
 
-let adjType = 'subtract';
-const inputTimeArray = [inputTimeEl0, inputTimeEl1];
-
 const loadSampleInput = function () {
   inputTextEl.value = `01:10 - Section 0
 02:30 - Section 1
@@ -214,7 +211,7 @@ copyToClipEl.addEventListener('click', function (e) {
   e.preventDefault();
   const copyContent = document.getElementById('output-text').value;
   const clipboardContent = copyContent
-    .slice(copyContent.indexOf('\n'))
+    .slice(copyContent.indexOf('*/') + 2)
     .trimStart();
   copyToClipboard(clipboardContent);
 });
@@ -226,7 +223,7 @@ adjustButtonEl.addEventListener('click', function (e) {
 
   console.log(Math.abs(timeToAdjust));
 
-  adjType = timeToAdjust < 0 ? 'add' : 'subtract';
+  const adjType = timeToAdjust < 0 ? 'add' : 'subtract';
 
   if (timeToAdjust) {
     const newTimestamps = adjustTime(
@@ -238,7 +235,8 @@ adjustButtonEl.addEventListener('click', function (e) {
     outputTextEl.value =
       `/* ${secondsToTime(
         Math.abs(timeToAdjust)
-      )} has been ${adjType}ed */\n\n` + newText;
+      )} has been ${adjType}ed.\nInvalid timestamps are marked as XX:XX */\n\n` +
+      newText;
   } else {
     outputTextEl.value = '';
   }
