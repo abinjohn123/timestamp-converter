@@ -39,14 +39,15 @@ TODO
 */
 
 const inputTextEl = document.getElementById('input-text');
-const timeAdjustEl = document.getElementById('time-to-adjust');
 const outputTextEl = document.getElementById('output-text');
-const buttonEl = document.getElementById('btn-adjust');
+const inputTimeEl0 = document.getElementById('time-to-adjust-0');
+const inputTimeEl1 = document.getElementById('time-to-adjust-1');
+const adjustButtonEl = document.getElementById('btn-adjust');
 const adjEls = document.querySelectorAll('.adj-icon');
 const copyToClipEl = document.getElementById('copy-icon');
-const invalidTimeEl = document.getElementById('invalid-input-time');
 
 let adjType = 'subtract';
+const inputTimeArray = [inputTimeEl0, inputTimeEl1];
 
 const loadSampleInput = function () {
   inputTextEl.value = `01:10 - Section 0
@@ -59,7 +60,8 @@ const loadSampleInput = function () {
 (20:22) - Section 6
 Section 7`;
 
-  timeAdjustEl.value = '2:08';
+  inputTimeEl0.value = '2:08';
+  inputTimeEl1.value = '2:08';
   // timeAdjustEl.value = '99:99:99';
 };
 
@@ -78,7 +80,7 @@ const timeToSeconds = (time) => {
       },
       [0, 0, 0]
     );
-  if (HH > 23 || MM > 59 || SS > 59) return null; //Return 0 if timestamp is invalid
+  if (HH > 23 || MM > 59 || SS > 59) return null; //Return null if timestamp is invalid
 
   return HH * 3600 + MM * 60 + SS;
 };
@@ -150,17 +152,35 @@ const copyToClipboard = function (copyText) {
     });
 };
 
-const displayError = function (state) {
-  if (state) {
-    timeAdjustEl.classList.remove('--input-valid');
-    timeAdjustEl.classList.add('--input-invalid');
-    invalidTimeEl.classList.remove('hidden');
-    timeAdjustEl.focus();
+const displayError = function (element, index, flag) {
+  if (flag) {
+    element.classList.remove('--input-valid');
+    element.classList.add('--input-invalid');
+    document.getElementById(`invalid-hint-${index}`).classList.remove('hidden');
+    element.focus();
   } else {
-    timeAdjustEl.classList.add('--input-valid');
-    timeAdjustEl.classList.remove('--input-invalid');
-    invalidTimeEl.classList.add('hidden');
+    element.classList.add('--input-valid');
+    element.classList.remove('--input-invalid');
+    document.getElementById(`invalid-hint-${index}`).classList.add('hidden');
   }
+};
+
+const calcAdjustmentTime = function (...timeEls) {
+  // const time1InSeconds = timeToSeconds(timeEl1.value);
+  // const time2InSeconds = timeToSeconds(timeEl2.value);
+
+  const [time1InSeconds, time2InSeconds] = timeEls.map((timeEl, index) => {
+    const timeInSeconds = timeToSeconds(timeEl.value);
+
+    if (!timeInSeconds) {
+      displayError(timeEl, index, true);
+      return null;
+    }
+    displayError(timeEl, index, false);
+    return timeInSeconds;
+  });
+
+  return time1InSeconds && time2InSeconds && time1InSeconds - time2InSeconds;
 };
 
 // ########################################
@@ -199,21 +219,27 @@ copyToClipEl.addEventListener('click', function (e) {
   copyToClipboard(clipboardContent);
 });
 
-buttonEl.addEventListener('click', function (e) {
+adjustButtonEl.addEventListener('click', function (e) {
   e.preventDefault();
   const inputText = inputTextEl.value;
-  const timeToAdjust = timeToSeconds(timeAdjustEl.value);
+  const timeToAdjust = calcAdjustmentTime(inputTimeEl0, inputTimeEl1);
+
+  console.log(Math.abs(timeToAdjust));
+
+  adjType = timeToAdjust < 0 ? 'add' : 'subtract';
 
   if (timeToAdjust) {
-    displayError(false);
-    const newTimestamps = adjustTime(inputText, timeToAdjust, adjType);
+    const newTimestamps = adjustTime(
+      inputText,
+      Math.abs(timeToAdjust),
+      adjType
+    );
     const newText = modifyText(inputText, newTimestamps);
     outputTextEl.value =
-      `/* ${secondsToTime(timeToAdjust)} has been ${adjType}ed */\n\n` +
-      newText;
+      `/* ${secondsToTime(
+        Math.abs(timeToAdjust)
+      )} has been ${adjType}ed */\n\n` + newText;
   } else {
-    displayError(true);
-    // alert('Please check if the adjusment time is correct');
     outputTextEl.value = '';
   }
 });

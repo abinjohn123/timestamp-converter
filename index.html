@@ -32,11 +32,8 @@
       </div>
       <div class="controls-box pad-med bdr-rad-s">
         <h2 class="controls-title">Controls</h2>
-        <!-- <div class="helper-text">
-          Enter how much time needs to be adjusted in HH:MM:SS format
-        </div> -->
         <div class="control">
-          <div class="adjustment-types">
+          <!-- <div class="adjustment-types">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="adj-icon"
@@ -63,17 +60,24 @@
                 clip-rule="evenodd"
               />
             </svg>
+          </div> -->
+          <div class="anchor">
+            <input
+              class="input-time --input-valid"
+              id="time-to-adjust-0"
+              type="text"
+              maxlength="8"
+            />
+            <p class="invalid-hint hidden" id="invalid-hint-0">Invalid Time</p>
           </div>
           <div class="anchor">
             <input
               class="input-time --input-valid"
-              id="time-to-adjust"
+              id="time-to-adjust-1"
               type="text"
               maxlength="8"
             />
-            <p class="invalid-hint hidden" id="invalid-input-time">
-              Invalid Time
-            </p>
+            <p class="invalid-hint hidden" id="invalid-hint-1">Invalid Time</p>
           </div>
         </div>
 
