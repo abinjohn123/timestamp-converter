@@ -33,8 +33,9 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 25rem 1fr;
-  column-gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  padding: 1rem;
 
   height: 100vh;
   width: 90vw;
@@ -125,9 +126,11 @@ body {
 }
 
 /* Control box styling */
-.controls-box {
+.controls {
   background-color: var(--options);
-  align-self: center;
+  grid-row: 2;
+  grid-column: 1/-1;
+  align-self: end;
 
   display: flex;
   flex-direction: column;
@@ -137,12 +140,33 @@ body {
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
 }
 
-.control {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+.controls-box {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  column-gap: 1rem;
+  /* background-color: beige; */
+  width: 100%;
+}
 
-  margin-bottom: 1rem;
+.control-separator {
+  width: 1px;
+  background-color: var(--opt-shade-2);
+
+  outline: none;
+  border: none;
+}
+
+.controls-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  /* background-color: yellow; */
+}
+
+.controls-right {
+  /* background-color: aqua; */
+  width: 100%;
 }
 
 .adjustment-types {
@@ -168,6 +192,20 @@ body {
 
 .anchor {
   position: relative;
+}
+
+.time-boxes {
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
 .input-time {

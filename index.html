@@ -30,10 +30,11 @@
           rows="10"
         ></textarea>
       </div>
-      <div class="controls-box pad-med bdr-rad-s">
+      <div class="controls pad-med bdr-rad-s">
         <h2 class="controls-title">Controls</h2>
-        <div class="control">
-          <!-- <div class="adjustment-types">
+        <div class="controls-box">
+          <div class="controls-left">
+            <!-- <div class="adjustment-types">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="adj-icon"
@@ -61,27 +62,44 @@
               />
             </svg>
           </div> -->
-          <div class="anchor">
-            <input
-              class="input-time --input-valid"
-              id="time-to-adjust-0"
-              type="text"
-              maxlength="8"
-            />
-            <p class="invalid-hint hidden" id="invalid-hint-0">Invalid Time</p>
-          </div>
-          <div class="anchor">
-            <input
-              class="input-time --input-valid"
-              id="time-to-adjust-1"
-              type="text"
-              maxlength="8"
-            />
-            <p class="invalid-hint hidden" id="invalid-hint-1">Invalid Time</p>
-          </div>
-        </div>
+            <div class="time-boxes">
+              <div class="input-box">
+                <p class="input-hint">First timestamp in primary content:</p>
+                <div class="anchor">
+                  <input
+                    class="input-time --input-valid"
+                    id="time-to-adjust-0"
+                    type="text"
+                    maxlength="8"
+                  />
+                  <p class="invalid-hint hidden" id="invalid-hint-0">
+                    Invalid Time
+                  </p>
+                </div>
+              </div>
+              <div class="input-box">
+                <p class="input-hint">
+                  Matching timestamp in secondary content:
+                </p>
+                <div class="anchor">
+                  <input
+                    class="input-time --input-valid"
+                    id="time-to-adjust-1"
+                    type="text"
+                    maxlength="8"
+                  />
+                  <p class="invalid-hint hidden" id="invalid-hint-1">
+                    Invalid Time
+                  </p>
+                </div>
+              </div>
+            </div>
 
-        <button class="btn" id="btn-adjust">Adjust</button>
+            <button class="btn" id="btn-adjust">Adjust</button>
+          </div>
+          <hr class="control-separator" />
+          <div class="controls-right">&nbsp;</div>
+        </div>
       </div>
       <div class="text-box --output pad-med">
         <h2 class="section-title">Adjusted Timestamps</h2>

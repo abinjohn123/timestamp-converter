@@ -177,7 +177,7 @@ const calcAdjustmentTime = function (...timeEls) {
     return timeInSeconds;
   });
 
-  return time1InSeconds && time2InSeconds && time1InSeconds - time2InSeconds;
+  return time1InSeconds && time2InSeconds && time1InSeconds - time2InSeconds; //Return null if any of the times is null. Else return the difference
 };
 
 // ########################################
@@ -220,8 +220,6 @@ adjustButtonEl.addEventListener('click', function (e) {
   e.preventDefault();
   const inputText = inputTextEl.value;
   const timeToAdjust = calcAdjustmentTime(inputTimeEl0, inputTimeEl1);
-
-  console.log(Math.abs(timeToAdjust));
 
   const adjType = timeToAdjust < 0 ? 'add' : 'subtract';
 
