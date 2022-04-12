@@ -58,11 +58,11 @@ const loadSampleInput = function () {
 Section 7`;
 
   inputTimeEl0.value = '2:08';
-  inputTimeEl1.value = '2:08';
+  inputTimeEl1.value = '3:08';
   // timeAdjustEl.value = '99:99:99';
 };
 
-const timeToSeconds = (time) => {
+const timeToSeconds = time => {
   //convert the HH:MM:SS time string to seconds
 
   if (!time) return null;
@@ -82,13 +82,13 @@ const timeToSeconds = (time) => {
   return HH * 3600 + MM * 60 + SS;
 };
 
-const secondsToTime = (sec) => {
+const secondsToTime = sec => {
   let hours = Math.floor(sec / 3600); // get hours
   let minutes = Math.floor((sec - hours * 3600) / 60); // get minutes
   let seconds = sec - hours * 3600 - minutes * 60; //  get seconds
 
   [hours, minutes, seconds] = [hours, minutes, seconds].map(
-    (time) => (time < 10 ? '0' + time : '' + time) //Add 0 at the start if time is less than 10
+    time => (time < 10 ? '0' + time : '' + time) //Add 0 at the start if time is less than 10
   );
 
   return hours === '00'
@@ -99,7 +99,7 @@ const secondsToTime = (sec) => {
 const adjustTime = function (text, timeToAdjust, adjType = 'subtract') {
   const timestamps = text
     .split('\n')
-    .map((line) => (line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/) || [null])[0]); //Extract the timestamps present from each line with regex. Return null if no timestamp is present in a given line
+    .map(line => (line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/) || [null])[0]); //Extract the timestamps present from each line with regex. Return null if no timestamp is present in a given line
 
   return timestamps.reduce((arr, time) => {
     if (time) {
@@ -185,7 +185,7 @@ const calcAdjustmentTime = function (...timeEls) {
 // ########################################
 
 function deselectButtons() {
-  adjEls.forEach((adjBtn) => {
+  adjEls.forEach(adjBtn => {
     adjBtn.classList.remove('--select');
     adjBtn.classList.add('--deselect');
   });
@@ -238,6 +238,17 @@ adjustButtonEl.addEventListener('click', function (e) {
   } else {
     outputTextEl.value = '';
   }
+});
+
+inputTextEl.addEventListener('input', function (e) {
+  e.preventDefault();
+
+  const [firstTimestamp, ...rest] = inputTextEl.value
+    .split('\n')
+    .map(line => (line.match(/\d{0,2}:{0,1}\d{1,2}:\d{1,2}/) || [null])[0])
+    .filter(stamp => stamp);
+
+  inputTimeEl0.value = secondsToTime(timeToSeconds(firstTimestamp));
 });
 
 // ######################################
