@@ -6,36 +6,6 @@ Flow
 2. Convert time to seconds (Tsec)
 3. Reduce the required time from Tsec
 4. Convert the remaining seconds back to HH:MM:SS
-
-
-## Sample Input
-02:30 - Section 1
-05:35 - Section 2
-07:53 - Section 3
-10:25 - Section 4
-(15:24) Section 5
-(20:22) - Section 6
-(45:51): Section 7
-
-
-RegEx
-\d{0,2}:{0,1}\d{1,2}:\d{1,2}
-
-
-
-TODO
-1. Add validation for input time in both document and control box (2:80 should not be valid))
-1.a. Develop test cases for validating input -- DONE
-1.b. Time adjustment should only run if control box input time is valid -- DONE
-1.c. Instead of alert box, make the alert display under the adjustment time box and add visual cues
-
-2. Add toggle to add / delete time from original timestamps -- Done
-
-3. Stylize scrollbar for textareas
-
-4. Add feature to highlight adjusted timestamps marked in XX:XX
-
-5. Display time in the comment text of the output screen in proper HH:MM:SS format
 */
 
 const inputTextEl = document.getElementById('input-text');
@@ -49,18 +19,19 @@ const invalidTimeEl = document.getElementById('invalid-input-time');
 let adjType = 'subtract';
 
 const loadSampleInput = function () {
-  inputTextEl.value = `01:10 - Section 0
-02:30 - Section 1
-115:35 - Section 2
-07:53 - Section 3
-##HEADING CHANGE
-10:25 - Section 4
-(15:24) Section 5
-(20:22) - Section 6
-Section 7`;
+  inputTextEl.value = `(00:00) Introduction
+(02:50) “Crossing: A Memoir” quotes: Boyhood
+(09:49) Early life and sexuality
+(14:29) Gender transition conversations with her ex-wife
+(16:53) Concealing her female interests from her ex-wife
+(17:44) The challenges in being sexually different from the majority in the 50s and 60s
+(20:23) The transition from sexual arousal to needing a physical reset
+(21:31) Gender transition after over a decade of marriage
+(23:09) Early days as a male
+(25:45) The resistance towards gender change
+(28:10) Praying to be a woman`;
 
-  timeAdjustEl.value = '2:08';
-  // timeAdjustEl.value = '99:99:99';
+  timeAdjustEl.value = '2:28';
 };
 
 const timeToSeconds = (time) => {
