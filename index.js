@@ -78,7 +78,7 @@ const adjustTime = function (text, timeToAdjust, adjType = 'subtract') {
       //Run time conversion only if a line has a timestamp
       const origTimeInSeconds = timeToSeconds(time);
 
-      if (!origTimeInSeconds)
+      if (!origTimeInSeconds && origTimeInSeconds !== 0)
         arr.push({
           old: time,
           new: 'XX:XX',
